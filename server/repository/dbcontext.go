@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"github.com/geniuscynic/gin-xjjxmm-admin/model/entity"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -17,7 +16,9 @@ func GetDbContext() *gorm.DB {
 }
 
 func InitDbAutoMigrate() {
-	GetDbContext().AutoMigrate(&entity.User{})
+	GetDbContext().AutoMigrate(&User{})
+	GetDbContext().AutoMigrate(&Role{})
+	GetDbContext().AutoMigrate(&UserRole{})
 }
 
 func initDbContext() *gorm.DB {

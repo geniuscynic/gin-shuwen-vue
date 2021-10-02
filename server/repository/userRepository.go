@@ -1,9 +1,14 @@
 package repository
 
-import "github.com/geniuscynic/gin-xjjxmm-admin/model/entity"
+type User struct {
+	Model    `json:",inline"`
+	Username string `gorm:"comment:用户登录名" json:"user_name"`             // 用户登录名
+	Password string `gorm:"comment:用户登录密码" json:"password"`             // 用户登录密码
+	NickName string `gorm:"default:系统用户;comment:用户昵称" json:"nick_name"` // 用户昵称
+}
 
-func Login(userName *string) (*entity.User, error) {
-	var user entity.User
+func (user *User) FindByName(userName *string) (*User, error) {
+	//var user entity.User
 
 	eor := GetDbContext().Where("username = ?", userName).First(&user).Error
 
@@ -11,10 +16,10 @@ func Login(userName *string) (*entity.User, error) {
 		return nil, eor
 	}
 
-	return &user, nil
+	return user, nil
 }
 
-func RegistUser(user *entity.User) (*entity.User, error) {
+func (user *User) Add() (*User, error) {
 	result := GetDbContext().Create(&user)
 
 	return user, result.Error

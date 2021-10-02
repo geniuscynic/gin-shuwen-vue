@@ -36,6 +36,9 @@ func (date *Time) Scan(value interface{}) (err error) {
 		time, _ := time.Parse(timeFormart, vt)
 
 		*date = Time(time)
+	case time.Time:
+		tmp := value.(time.Time)
+		*date = Time(tmp)
 	default:
 		return errors.New("类型处理错误")
 	}

@@ -7,10 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Run() {
-	router := gin.Default()
+func Run(router *gin.Engine) {
+	//router := gin.Default()
 
-	InitUserRoute(router.Group(""))
+	group := router.Group("/api")
+	{
+		InitUserRoute(group)
+	}
+	//InitUserRoute(router.Group(""))
 
 	s := &http.Server{
 		Addr:           ":8889",
